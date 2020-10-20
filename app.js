@@ -13,6 +13,10 @@ app.get("/", (req, res)=>{
     res.render("form");
 })
 
+app.get("/success/:name", (req, res)=>{
+    res.render("success", {name: req.params.name});
+})
+
 app.post("/send", (req, res) => {
 
     let transporter = nodemailer.createTransport({
@@ -41,6 +45,7 @@ app.post("/send", (req, res) => {
         `;
       // setup email data with unicode symbols
       let mailOptions = {
+          name: req.body.name,
           from: req.body.sen_email, // sender address
           to: req.body.rec_email, // list of receivers
           subject:"new connection request", // Subject line
@@ -55,8 +60,10 @@ app.post("/send", (req, res) => {
           }
           console.log('Message sent: %s', info.messageId);   
           console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-    
-          res.redirect('/');
+
+          const client = mailOptions.name;
+
+          res.redirect("/success/"+client);
       });
 });
 
