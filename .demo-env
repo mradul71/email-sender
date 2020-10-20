@@ -1,0 +1,4 @@
+HOST = <your_host_mail>
+HOST_POST= <host_port>
+USER= <Host_user>
+PASS= <Host_pass>
